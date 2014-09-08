@@ -22,7 +22,6 @@ public class BaseController {
 	public String welcome(ModelMap model) {
 
 		model.addAttribute("message", "Leave a message using the form");
-
 		// Spring uses InternalResourceViewResolver and return back index.jsp
 		return "index";
 	}
@@ -31,12 +30,13 @@ public class BaseController {
 	 * Saves a message in the database
 	 */
 	@RequestMapping(value = "/send", method = RequestMethod.GET)
-	public String send(@RequestParam(value = "content") String content,
+	public String send(@RequestParam(value = "author") String author, @RequestParam(value = "content") String content,
 			ModelMap model) {
 		Message msg = new Message();
+		msg.setAuthor(author);
 		msg.setContent(content);
 		int id = messageDao.save(msg);
-		model.addAttribute("message", "Message id of stored message=" + id);
+		model.addAttribute("info", "Message id of stored message=" + id);
 		return "index";
 	}
 
@@ -47,10 +47,10 @@ public class BaseController {
 	public String read(ModelMap model) {
 		Message message = messageDao.getLast();
 		if (message != null) {
-			model.addAttribute("message",
-					"The last message was: " + message.getContent());
+			model.addAttribute("message", message.getContent());
+			model.addAttribute("author", message.getAuthor());
 		} else {
-			model.addAttribute("message", "No message found");
+			model.addAttribute("info", "No message found");
 		}
 		// Spring uses InternalResourceViewResolver and return back index.jsp
 		return "index";
@@ -63,10 +63,11 @@ public class BaseController {
 	public String readId(@PathVariable int id, ModelMap model) {
 		Message message = messageDao.get(id);
 		if (message != null) {
-			model.addAttribute("message", "Message number " + id + " was: "
-					+ message.getContent());
+			model.addAttribute("info", "Message number " + id);
+			model.addAttribute("message", message.getContent());
+			model.addAttribute("author", message.getAuthor());
 		} else {
-			model.addAttribute("message", "No message found");
+			model.addAttribute("info", "No message found");
 		}
 		// Spring uses InternalResourceViewResolver and return back index.jsp
 		return "index";

@@ -2,6 +2,7 @@ package no.uio.inf5750.assignment1_bdher.model;
 
 public class Message {
 	private int id;
+	private String author;
 	private String content;
 
 	public Message() {
@@ -21,6 +22,16 @@ public class Message {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+	
+	public String getAuthor()
+	{
+		return author;
+	}
+	
+	public void setAuthor(String author)
+	{
+		this.author = author;
 	}
 
 	

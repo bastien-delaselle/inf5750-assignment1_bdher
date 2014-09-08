@@ -8,5 +8,6 @@
       <generator class="native"/>
     </id>
     <property name="content" not-null="true"/>
+    <property name="author" not-null="false"/>
   </class>
 </hibernate-mapping>
